@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 
 
 import SunCloudLogo from "../../../components/svgs/SunCloud.jsx";
@@ -16,6 +17,7 @@ const API_URL = import.meta.env.VITE_API_URL || "";
 
 const LoginPage = () => {
 	const [formData, setFormData] = useState({ username: "", password: "" });
+	const [showPassword, setShowPassword] = useState(false);
 
 	const queryClient = useQueryClient();
 
@@ -88,16 +90,23 @@ const LoginPage = () => {
 					</label>
 
 					{/* Password */}
-					<label className="input input-bordered rounded flex items-center gap-2">
+					<label className="input input-bordered rounded flex items-center gap-2 relative">
 						<MdPassword />
 						<input
-							type="password"
-							className="grow"
+							type={showPassword ? "text" : "password"}
+							className="grow pr-8" // Keeps long passwords from overlapping the eye icon
 							placeholder="Password"
 							name="password"
 							onChange={handleInputChange}
 							value={formData.password}
 						/>
+						<button
+							type="button" // Important: ensures clicking the eye doesn't submit your form
+							className="absolute right-3 text-gray-400 hover:text-white transition-colors"
+							onClick={() => setShowPassword(!showPassword)}
+						>
+							{showPassword ? <IoEyeOff className="w-5 h-5" /> : <IoEye className="w-5 h-5" />}
+						</button>
 					</label>
 
 					{/* Submit Button */}

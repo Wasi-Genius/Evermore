@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 import SunCloudLogo from "../../../components/svgs/SunCloud.jsx";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 
 import { MdOutlineMail } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
@@ -17,7 +18,7 @@ const SignUpPage = () => {
 		username: "",
 		fullName: "",
 		password: "",
-	});
+	}); const [showPassword, setShowPassword] = useState(false);
 
 	const { mutate, isError, isPending, error } = useMutation({
 		mutationFn: async ({ email, username, fullName, password }) => {
@@ -109,16 +110,23 @@ const SignUpPage = () => {
 						</label>
 					</div>
 
-					<label className="input input-bordered rounded flex items-center gap-2">
+					<label className="input input-bordered rounded flex items-center gap-2 relative">
 						<MdPassword />
 						<input
-							type="password"
-							className="grow"
+							type={showPassword ? "text" : "password"}
+							className="grow pr-8" // Padding on the right stops text from overlapping the icon
 							placeholder="Password"
 							name="password"
 							onChange={handleInputChange}
 							value={formData.password}
 						/>
+						<button
+							type="button" // Prevents the button from submitting the form unexpectedly
+							className="absolute right-3 text-gray-400 hover:text-white transition-colors"
+							onClick={() => setShowPassword(!showPassword)}
+						>
+							{showPassword ? <IoEyeOff className="w-5 h-5" /> : <IoEye className="w-5 h-5" />}
+						</button>
 					</label>
 					<button className="btn rounded-full btn-primary text-white">
 						{isPending ? "Signing up..." : "Sign up"}
