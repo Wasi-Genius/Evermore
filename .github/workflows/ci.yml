@@ -29,3 +29,28 @@ jobs:
 
       # Step 3: Runs a standard terminal command to print "Pipeline Working!" to the logs.
       - run: echo "Pipeline Working!"
+
+      # Step 4: Installs the node_modules specifically inside your backend folder.
+      - name: Install Backend Dependencies
+        run: npm install
+        working-directory: backend
+
+      # Step 5: Runs the ESLint checker inside your backend folder to catch code mistakes.
+      - name: Lint Backend
+        run: npm run lint
+        working-directory: backend
+
+      # Step 6: Installs the node_modules specifically inside your frontend folder.
+      - name: Install Frontend Dependencies
+        run: npm install
+        working-directory: frontend
+
+      # Step 7: Runs backend tests
+      - name: Run Backend Tests
+        run: npm test
+        working-directory: backend
+
+      # Step 8: Runs frontend tests
+      - name: Run Frontend Tests
+        run: npm test
+        working-directory: frontend
