@@ -91,6 +91,11 @@ export const commentOnPost = async (req, res) => {
 				.json({ error: "Comments cannot be more than 2000 characters in length" });
 		}
 
+		const filter = new Filter();
+		if (filter.isProfane(text)) {
+			return res.status(400).json({ error: "Your comment contains inappropriate content." });
+		}
+
 		const post = await Post.findById(postId);
 		if (!post) return res.status(404).json({ message: "Post not found" });
 
@@ -381,6 +386,11 @@ export const rePost = async (req, res) => {
 		if (repostOf.isRepost && repostOf.repostOf) {
 			repostOf = await Post.findById(repostOf.repostOf);
 			if (!repostOf) return res.status(404).json({ message: "Original post not found" });
+		}
+
+		const filter = new Filter();
+		if (filter.isProfane(text)) {
+			return res.status(400).json({ error: "Your repost contains inappropriate content." });
 		}
 
 		// Create the repost as a new Post document

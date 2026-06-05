@@ -1,0 +1,31 @@
+# The name of this automation pipeline as it appears in GitHub's "Actions" tab.
+name: CI
+
+# Triggers: Defines what events start this pipeline.
+on:
+  # Run this automation whenever code is "pushed"...
+  push:
+    # ...but only if that push happens on the "main" branch.
+    branches:
+      - main
+
+# Jobs: The actual phases of work this pipeline will execute.
+jobs:
+  # A custom identifier for this specific job (we named it "test").
+  test:
+    # The operating system environment the automation runner will use (a fresh Linux machine).
+    runs-on: ubuntu-latest
+
+    # Steps: The sequential list of commands to run inside this job.
+    steps:
+      # Step 1: Downloads (clones) your repository code onto the Linux runner so it can access it.
+      - uses: actions/checkout@v4
+
+      # Step 2: Installs Node.js on the Linux runner.
+      - uses: actions/setup-node@v4
+        # Configures the step to specifically install Node version 20.
+        with:
+          node-version: 20
+
+      # Step 3: Runs a standard terminal command to print "Pipeline Working!" to the logs.
+      - run: echo "Pipeline Working!"
