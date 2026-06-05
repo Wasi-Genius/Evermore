@@ -2,7 +2,7 @@ import User from "../models/user.model.js";
 import Post from "../models/post.model.js";
 import Notification from "../models/notification.model.js";
 import { v2 as cloudinary } from "cloudinary";
-import Filter from "bad-words";
+import { Filter } from "bad-words";
 
 // Create a new post
 export const createPost = async (req, res) => {
