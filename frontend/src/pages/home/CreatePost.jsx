@@ -56,6 +56,15 @@ const CreatePost = () => {
 	const handleImgChange = (e) => {
 		const file = e.target.files[0];
 		if (file) {
+			// 2MB Limit (2 * 1024 * 1024 bytes)
+			const maxSize = 2 * 1024 * 1024; 
+
+			if (file.size > maxSize) {
+				toast.error("Image is too large! Please select an image under 2MB.");
+				e.target.value = null; // Clear the input selection
+				return;
+			}
+
 			const reader = new FileReader();
 			reader.onload = () => {
 				setImg(reader.result);

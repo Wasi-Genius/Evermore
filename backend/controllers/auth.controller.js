@@ -17,9 +17,15 @@ const sendUserResponse = (user, res, status = 200) => {
 };
 
 // Signup new user
-
 export const signup = async (req, res) => {
 	try {
+
+		const totalUsers = await User.countDocuments();
+
+		if (totalUsers >= 30) {
+			return res.status(400).json({ error: "Registration is temporarily closed due to high demo traffic." });
+		}
+
 		const { fullName, username, email, password } = req.body;
 
 		// Simple email format validation
