@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import LoadingSpinner from "./LoadingSpinner";
 import useFollow from "../../hooks/userFollow";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
@@ -16,13 +17,13 @@ const fetchSuggestedUsers = async () => {
 		const data = await res.json();
 
 		if (!res.ok) {
-			console.error("[fetchSuggestedUsers] Error:", data.error);
+			toast.error(data.message || data.error || "Failed to fetch suggested users");
 			throw new Error(data.message || data.error || "Failed to fetch suggested users");
 		}
 
 		return data;
 	} catch (error) {
-		console.error("[fetchSuggestedUsers] Exception:", error.message);
+		toast.error(error.message || "Error fetching suggested users");
 		throw new Error(error.message || "Error fetching suggested users");
 	}
 };
@@ -52,7 +53,7 @@ const RightPanel = () => {
 	const { follow, isPending } = useFollow();
 
 	if (error) {
-		console.error("[RightPanel] Query error:", error.message);
+		toast.error(error.message || "Failed to load suggested users");
 	}
 
 	// If no users, show invisible box (keeps layout consistent for suggested)

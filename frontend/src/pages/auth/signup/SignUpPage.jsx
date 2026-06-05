@@ -36,7 +36,7 @@ const SignUpPage = () => {
 				if (!res.ok) throw new Error(data.message || data.error || "Failed to create account");
 				return data;
 			} catch (error) {
-				console.error(error);
+				toast.error(error.message || "Failed to create account");
 				throw error;
 			}
 		},

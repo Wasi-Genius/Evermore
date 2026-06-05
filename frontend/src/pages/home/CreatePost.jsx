@@ -35,7 +35,7 @@ const CreatePost = () => {
 				return data;
 
 			} catch (error) {
-				console.error("Error creating post:", error);
+				toast.error("Error creating post:", error);
 				throw error;
 			}
 		},

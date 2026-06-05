@@ -100,7 +100,6 @@ const ProfilePage = () => {
 
 				return data;
 			} catch (error) {
-				console.error("[updateProfile] Error:", error);
 				throw new Error(error.message || "Something went wrong");
 			}
 		},
@@ -122,7 +121,6 @@ const ProfilePage = () => {
 		},
 
 		onError: (error) => {
-			console.error("[updateProfile] Mutation error:", error);
 			toast.error(error.message);
 		},
 	});
