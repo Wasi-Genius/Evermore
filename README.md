@@ -2,6 +2,8 @@
 
 A full-stack, production-level social media site built with modern web technologies. This project demonstrates advanced skills in scalable backend development, responsive frontend engineering, authentication, real-time features, and clean code architecture.
 
+Build Status: [![CI](https://github.com/Wasi-Genius/Evermore/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Wasi-Genius/Evermore/actions/workflows/ci.yml)
+
 ## Table of Contents
 
 - [Demo](#demo)

@@ -54,3 +54,9 @@ jobs:
       - name: Run Frontend Tests
         run: npm test
         working-directory: frontend
+
+      # Step 9: Test docker 
+      - name: Test Docker 
+        run: |
+          docker build -t backend ./backend
+          docker build -t frontend ./frontend
