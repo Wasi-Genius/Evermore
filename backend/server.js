@@ -5,6 +5,7 @@ import { v2 as cloudinary } from "cloudinary";
 import path from "path";
 import cors from 'cors';
 import rateLimit from "express-rate-limit";
+import morgan from "morgan";
 
 //Routes
 import authRoutes from "./routes/auth.routes.js";
@@ -34,6 +35,8 @@ const limiter = rateLimit({
     message: { error: "Too many requests from this IP, please try again later." }
 });
 
+const morgan = require("morgan");
+
 app.use(cors({
   origin: process.env.CLIENT_URL, 
   credentials: true
@@ -42,17 +45,38 @@ app.use(cors({
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "healthy",
+    timestamp: new Date().toISOString()
+  });
+});
+
+app.use(morgan("combined"));
+
 app.use(cookieParser());
+
+app.use((req, res, next) => {
+  const start = Date.now();
+
+  res.on("finish", () => {
+    const duration = Date.now() - start;
+
+    console.log(
+      `${req.method} ${req.originalUrl} ${res.statusCode} ${duration}ms`
+    );
+  });
+
+  next();
+});
+
 app.use("/api", limiter);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/notifications", notificationRoutes);
-
-app.get("/health", (req, res) => {
-  res.status(200).json({ status: "ok" });
-});
+app.use(errorHandler);
 
 app.listen(PORT, () => {
 	console.log("Server is running on port", PORT);
