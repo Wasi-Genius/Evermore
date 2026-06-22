@@ -12,6 +12,7 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import postRoutes from "./routes/post.routes.js";
 import notificationRoutes from "./routes/notification.routes.js";
+import errorHandler from "./middleware/errorHandler.js"; 
 
 import connectMongoDB from "./db/connectMongoDB.js";
 
@@ -35,15 +36,13 @@ const limiter = rateLimit({
     message: { error: "Too many requests from this IP, please try again later." }
 });
 
-const morgan = require("morgan");
-
 app.use(cors({
   origin: process.env.CLIENT_URL, 
   credentials: true
 }));
 
 app.use(express.json({ limit: "5mb" }));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ limit: "5mb", extended: true }));
 
 app.get("/health", (req, res) => {
   res.status(200).json({
