@@ -3,6 +3,18 @@ import Post from "../models/post.model.js";
 import Notification from "../models/notification.model.js";
 import { v2 as cloudinary } from "cloudinary";
 import { Filter } from "bad-words";
+import { redis } from "../lib/redis.js";
+
+
+// Helper function to safely clear cache without crashing the app
+const invalidateFeedCache = async () => {
+    try {
+        await redis.del("feed_posts");
+        console.log("Redis Cache Invalidated: feed_posts cleared.");
+    } catch (redisError) {
+        console.error("Redis Cache Invalidation Failed:", redisError.message);
+    }
+};
 
 // Create a new post
 export const createPost = async (req, res) => {
@@ -37,6 +49,8 @@ export const createPost = async (req, res) => {
 		const newPost = new Post({ user: userId, text, img });
 		await newPost.save();
 
+		await invalidateFeedCache();
+
 		return res.status(201).json({
 			message: "Post created successfully",
 			post: newPost,
@@ -65,6 +79,7 @@ export const deletePost = async (req, res) => {
 		}
 
 		await post.deleteOne();
+		await invalidateFeedCache();
 		return res.status(200).json({ message: "Post deleted successfully" });
 	} catch (error) {
 		return res.status(500).json({
@@ -110,6 +125,7 @@ export const commentOnPost = async (req, res) => {
 		const comment = { text, user: userId };
 		post.comments.push(comment);
 		await post.save();
+		await invalidateFeedCache();
 
 		return res.status(201).json({
 			comment,
@@ -145,6 +161,7 @@ export const deleteComment = async (req, res) => {
 
 		await comment.deleteOne();
 		await post.save();
+		await invalidateFeedCache();
 		return res.status(200).json({ message: "Comment deleted successfully" });
 	} catch (error) {
 		return res.status(500).json({
@@ -186,6 +203,7 @@ export const likeUnlikePost = async (req, res) => {
 			updatedLikes = post.likes;
 		}
 
+		await invalidateFeedCache();
 		return res.status(200).json({ updatedLikes });
 	} catch (error) {
 		return res.status(500).json({
@@ -229,6 +247,7 @@ export const bookmarkPost = async (req, res) => {
 
 			updatedBookmarks = post.bookmarks;
 		}
+		await invalidateFeedCache();
 		return res.status(200).json({ updatedBookmarks });
 	} catch (error) {
 		return res.status(500).json({
@@ -240,26 +259,49 @@ export const bookmarkPost = async (req, res) => {
 
 // Get all posts
 export const getAllPosts = async (req, res) => {
-	try {
-		const posts = await Post.find()
-			.sort({ createdAt: -1 })
-			.populate("user", "-password")
-			.populate("comments.user", "-password")
-			.populate({
-				path: "repostOf",
-				populate: [
-					{ path: "user", select: "-password" },
-					{ path: "comments.user", select: "-password" },
-				],
-			});
+    const cacheKey = "feed_posts";
+    
+    // 1. Try reading from Redis first (Fail-safe wrapper)
+    try {
+        const cachedPosts = await redis.get(cacheKey);
+        if (cachedPosts) {
+            console.log("Redis Cache Hit! Serving feed instantly.");
+            return res.status(200).json(cachedPosts);
+        }
+    } catch (redisError) {
+        console.error("Redis Read Error (Falling back directly to Mongo):", redisError.message);
+    }
 
-		return res.status(200).json(posts);
-	} catch (error) {
-		return res.status(500).json({
-			message: "Internal server error!",
-			error: error.message,
-		});
-	}
+    // 2. Cache Miss: Execute heavy MongoDB lookups and relations
+    try {
+        console.log("Redis Cache Miss! Querying MongoDB database...");
+        const posts = await Post.find()
+            .sort({ createdAt: -1 })
+            .populate("user", "-password")
+            .populate("comments.user", "-password")
+            .populate({
+                path: "repostOf",
+                populate: [
+                    { path: "user", select: "-password" },
+                    { path: "comments.user", select: "-password" },
+                ],
+            });
+
+        // 3. Try saving fresh data back into Redis with 5-minute TTL (Fail-safe wrapper)
+        try {
+            await redis.set(cacheKey, posts, { ex: 300 });
+            console.log("Fresh MongoDB data successfully stored in Redis Cache.");
+        } catch (redisError) {
+            console.error("Redis Write Error:", redisError.message);
+        }
+
+        return res.status(200).json(posts);
+    } catch (error) {
+        return res.status(500).json({
+            message: "Internal server error!",
+            error: error.message,
+        });
+    }
 };
 
 // Get liked posts by user
@@ -422,6 +464,8 @@ export const rePost = async (req, res) => {
 			});
 			await notification.save();
 		}
+
+		await invalidateFeedCache();
 
 		return res.status(201).json({
 			message: "Post reposted successfully",
