@@ -6,6 +6,11 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     build: ./backend
@@ -17,19 +22,25 @@ services:
       - ./backend:/app
       - /app/node_modules
     depends_on:
-      - db
+      db:
+        condition: service_healthy # Only starts backend after DB passes its healthcheck
     environment:
       - MONGO_URI=mongodb://db:27017/Evermore-DB
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   frontend:
     build: ./frontend
     ports:
-      - "5173:3000"
+      - "3000:80" # Maps local port 3000 to the container's Nginx port 80
     env_file:
       - ./frontend/.env
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
+    depends_on:
+      backend:
+        condition: service_healthy # Only starts frontend after Backend passes its healthcheck
 
 volumes:
   mongo-data:
