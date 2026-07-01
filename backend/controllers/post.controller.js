@@ -4,6 +4,7 @@ import Notification from "../models/notification.model.js";
 import { v2 as cloudinary } from "cloudinary";
 import { Filter } from "bad-words";
 import { redis } from "../lib/redis.js";
+import { postQueue } from "../lib/queue.js";
 
 
 // Helper function to safely clear cache without crashing the app
@@ -50,6 +51,17 @@ export const createPost = async (req, res) => {
 		await newPost.save();
 
 		await invalidateFeedCache();
+
+		// Offload telemetry or notifications to the background queue
+		try {
+            await postQueue.add("logPostActivity", {
+                userId,
+                text
+            });
+            console.log("Job added to BullMQ safely.");
+        } catch (queueError) {
+            console.error("⚠️ Failed to queue background job:", queueError.message);
+        }
 
 		return res.status(201).json({
 			message: "Post created successfully",
