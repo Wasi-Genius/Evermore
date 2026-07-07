@@ -1,15 +1,17 @@
 import mongoose from "mongoose";
 
+/**
+ * Connects to MongoDB using the URI provided in environment variables.
+ * Exits the process if the database connection cannot be established.
+ */
 const connectMongoDB = async () => {
-	try {
-		// ADD THESE TWO LOGS:
-        console.log("--- DEBUGGING ENV VARIABLES ---");
-        console.log("What Node sees for MONGO_URI:", process.env.MONGO_URI);
-		const conn = await mongoose.connect(process.env.MONGO_URI);
-	} catch (error) {
-		console.error("Error connecting to MongoDB:", error.message);
-		process.exit(1);
-	}
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB connected successfully");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error.message);
+    process.exit(1);
+  }
 };
 
 export default connectMongoDB;

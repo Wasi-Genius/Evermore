@@ -1,19 +1,23 @@
+/**
+ * Auth controller
+ * Handles signup, login, logout, and current user profile retrieval.
+ */
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateTokenAndSetCookie } from "../lib/utils/generateToken.js";
 
 // Helper to send user data back to client (excluding sensitive fields)
 const sendUserResponse = (user, res, status = 200) => {
-	res.status(status).json({
-		_id: user._id,
-		fullName: user.fullName,
-		username: user.username,
-		email: user.email,
-		followers: user.followers,
-		following: user.following,
-		profilePicture: user.profileImg,
-		coverImg: user.coverImg,
-	});
+  res.status(status).json({
+    _id: user._id,
+    fullName: user.fullName,
+    username: user.username,
+    email: user.email,
+    followers: user.followers,
+    following: user.following,
+    profilePicture: user.profileImg,
+    coverImg: user.coverImg,
+  });
 };
 
 // Signup new user

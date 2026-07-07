@@ -1,3 +1,7 @@
+/**
+ * Notification schema
+ * Represents activity notifications sent to users and expires them automatically.
+ */
 import mongoose from "mongoose";
 
 // Expire notifications after 15 days (in seconds)

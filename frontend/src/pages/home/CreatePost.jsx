@@ -1,3 +1,7 @@
+/**
+ * CreatePost
+ * Small form used on the Home feed to create a new post with optional image.
+ */
 import { CiImageOn } from "react-icons/ci";
 import { useRef, useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";

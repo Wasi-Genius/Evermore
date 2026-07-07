@@ -1,3 +1,7 @@
+/**
+ * JWT helper
+ * Creates a signed token for a user and sends it to the client in a secure cookie.
+ */
 import jwt from "jsonwebtoken";
 
 export const generateTokenAndSetCookie = (userId, res) => {

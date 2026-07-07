@@ -1,3 +1,7 @@
+/**
+ * Redis client
+ * Provides a shared Upstash Redis instance for backend caching.
+ */
 import { Redis } from "@upstash/redis";
 import dotenv from "dotenv";
 

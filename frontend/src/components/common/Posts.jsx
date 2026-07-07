@@ -1,3 +1,9 @@
+/**
+ * Posts list
+ * Responsible for selecting the appropriate posts endpoint based on
+ * `feedType` and rendering either loading skeletons, an empty state,
+ * or the list of `Post` items.
+ */
 import Post from "./Post";
 import PostSkeleton from "../skeletons/PostSkeleton";
 import { useQuery } from "@tanstack/react-query";

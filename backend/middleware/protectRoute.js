@@ -1,3 +1,7 @@
+/**
+ * protectRoute middleware
+ * Verifies JWT cookie and loads the current user into req.user.
+ */
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 

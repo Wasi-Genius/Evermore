@@ -1,18 +1,22 @@
-import { protectRoute } from "../middleware/protectRoute.js";
+/**
+ * Post routes
+ * Handles the feed, single-user post feeds, likes, bookmarks, comments, reposts, and CRUD ops.
+ */
 import express from "express";
+import { protectRoute } from "../middleware/protectRoute.js";
 import {
-	createPost,
-	deletePost,
-	commentOnPost,
-	deleteComment,
-	likeUnlikePost,
-	bookmarkPost,
-	getAllPosts,
-	getLikedPosts,
-	getBookmarkedPosts,
-	getFollowingPosts,
-	getUserPosts,
-	rePost,
+  createPost,
+  deletePost,
+  commentOnPost,
+  deleteComment,
+  likeUnlikePost,
+  bookmarkPost,
+  getAllPosts,
+  getLikedPosts,
+  getBookmarkedPosts,
+  getFollowingPosts,
+  getUserPosts,
+  rePost,
 } from "../controllers/post.controller.js";
 
 const router = express.Router();

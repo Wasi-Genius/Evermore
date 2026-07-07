@@ -1,3 +1,7 @@
+/**
+ * Notification controller
+ * Responsible for fetching and deleting user notifications.
+ */
 import Notification from "../models/notification.model.js";
 
 // Get all notifications for the authenticated user

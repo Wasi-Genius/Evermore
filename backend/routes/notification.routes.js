@@ -1,9 +1,13 @@
+/**
+ * Notification routes
+ * Provides access to current user notifications and deletion actions.
+ */
 import express from "express";
 import { protectRoute } from "../middleware/protectRoute.js";
 import {
-	getNotifications,
-	deleteNotifications,
-	deleteNotificationById,
+  getNotifications,
+  deleteNotifications,
+  deleteNotificationById,
 } from "../controllers/notification.controller.js";
 
 const router = express.Router();

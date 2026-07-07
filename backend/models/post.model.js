@@ -1,3 +1,7 @@
+/**
+ * Post schema
+ * Defines posts, comments, likes, bookmarks, repost relationships, and timeline indexing.
+ */
 import mongoose from "mongoose";
 
 const commentSchema = new mongoose.Schema(

@@ -1,3 +1,8 @@
+/**
+ * Post controller
+ * Handles all post-related operations including create/delete, comments,
+ * likes/bookmarks, reposts, and feed retrieval.
+ */
 import User from "../models/user.model.js";
 import Post from "../models/post.model.js";
 import Notification from "../models/notification.model.js";
@@ -5,7 +10,6 @@ import { v2 as cloudinary } from "cloudinary";
 import { Filter } from "bad-words";
 import { redis } from "../lib/redis.js";
 import { postQueue } from "../lib/queue.js";
-
 
 // Helper function to safely clear cache without crashing the app
 const invalidateFeedCache = async () => {

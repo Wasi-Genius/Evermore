@@ -1,3 +1,7 @@
+/**
+ * Home page
+ * Hosts the feed selector, create post area, and the posts list.
+ */
 import { useState } from "react";
 
 import Posts from "../../components/common/Posts.jsx";

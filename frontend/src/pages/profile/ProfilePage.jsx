@@ -1,3 +1,7 @@
+/**
+ * Profile page
+ * Shows user banner, avatar, profile info and a posts feed for the profile.
+ */
 import { useRef, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 

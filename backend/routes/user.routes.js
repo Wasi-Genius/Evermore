@@ -1,10 +1,14 @@
+/**
+ * User routes
+ * Endpoints for profile fetching, following/unfollowing, suggested users, and profile updates.
+ */
 import express from "express";
 import { protectRoute } from "../middleware/protectRoute.js";
 import {
-	followUnfollowUser,
-	getSuggestedUsers,
-	updateUserProfile,
-	getUserProfile,
+  followUnfollowUser,
+  getSuggestedUsers,
+  updateUserProfile,
+  getUserProfile,
 } from "../controllers/user.controller.js";
 
 const router = express.Router();

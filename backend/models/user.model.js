@@ -1,3 +1,7 @@
+/**
+ * User schema
+ * Stores user account data, profile fields, and relationships to other user posts.
+ */
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(

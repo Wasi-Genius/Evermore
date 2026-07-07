@@ -1,4 +1,9 @@
-import { useState } from "react";
+/**
+ * Post component and helpers
+ * Renders a single post, its actions (like, comment, repost),
+ * and related modals (comments, repost, image preview).
+ */
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
@@ -8,7 +13,7 @@ import { BiRepost } from "react-icons/bi";
 import LoadingSpinner from "./LoadingSpinner";
 import { formatPostDate } from "../../utils/date/dateTools";
 
-import { useEffect } from "react";
+
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 

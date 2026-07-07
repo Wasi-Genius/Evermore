@@ -1,3 +1,7 @@
+/**
+ * Background job queue
+ * Uses BullMQ and Upstash Redis to process lightweight post-related jobs asynchronously.
+ */
 import { Queue, Worker } from "bullmq";
 import IoRedis from "ioredis";
 import dotenv from "dotenv";

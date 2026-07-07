@@ -1,3 +1,7 @@
+/**
+ * Notifications page
+ * Lists user notifications and provides controls to delete them.
+ */
 import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import LoadingSpinner from "../../components/common/LoadingSpinner";

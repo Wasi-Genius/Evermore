@@ -1,9 +1,12 @@
+/**
+ * RightPanel
+ * Shows suggested users to follow and lightweight follow actions.
+ */
 import { Link } from "react-router-dom";
 import RightPanelSkeleton from "../skeletons/RightPanelSkeleton";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "./LoadingSpinner";
 import useFollow from "../../hooks/userFollow";
-import { useEffect } from "react";
 import toast from "react-hot-toast";
 
 const API_URL = import.meta.env.VITE_API_URL || "";

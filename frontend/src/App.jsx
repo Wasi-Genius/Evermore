@@ -1,3 +1,7 @@
+/**
+ * Application root component
+ * Defines top-level routes and global layout (sidebar, right panel, toasts).
+ */
 import { Route, Routes, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";

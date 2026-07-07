@@ -1,3 +1,8 @@
+/**
+ * Sidebar navigation
+ * Shows the app logo, navigation links and the authenticated user quick
+ * profile area with logout. Visible on larger viewports.
+ */
 import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
@@ -77,7 +82,6 @@ const Sidebar = () => {
 					)}
 				</ul>
 
-				{/* --- Authenticated User Section --- */}
 				{/* --- Authenticated User Section --- */}
 				{authUser && (
 					<div className="mt-auto mb-10 flex gap-2 items-center transition-all duration-300 hover:bg-[#181818] py-2 px-4 rounded-full">

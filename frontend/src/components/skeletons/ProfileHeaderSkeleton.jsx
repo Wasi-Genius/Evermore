@@ -1,3 +1,6 @@
+/**
+ * Skeleton for the profile header while profile data loads.
+ */
 const ProfileHeaderSkeleton = () => {
 	return (
 		<div className="flex flex-col gap-2 w-full my-2 p-4">
