@@ -1,303 +1,160 @@
-````markdown
-# Evermore
+# Evermore (Wasi Genius) 🐦
 
-A full-stack social media platform built with modern web technologies and production-focused DevOps practices. Evermore demonstrates end-to-end software engineering, from frontend and backend development to containerization, cloud deployment, CI/CD automation, monitoring, security, and scalable application architecture.
+A full-stack, production-level social media site built with modern web technologies. This project demonstrates advanced skills in scalable backend development, responsive frontend engineering, authentication, real-time features, and clean code architecture.
 
-**Build Status:** [![CI](https://github.com/Wasi-Genius/Evermore/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Wasi-Genius/Evermore/actions/workflows/ci.yml)
-
----
+Build Status: [![CI](https://github.com/Wasi-Genius/Evermore/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Wasi-Genius/Evermore/actions/workflows/ci.yml)
 
 ## Table of Contents
 
-- [Overview](#overview)
 - [Demo](#demo)
 - [Features](#features)
 - [Architecture](#architecture)
-- [DevOps & Infrastructure](#devops--infrastructure)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Setup & Installation](#setup--installation)
-- [CI/CD Pipeline](#cicd-pipeline)
-- [Monitoring & Observability](#monitoring--observability)
 - [API Documentation](#api-documentation)
 - [Contact](#contact)
 
 ---
 
-# Overview
-
-Evermore is a production-ready social media application that combines a modern React frontend with a scalable Node.js backend and a complete DevOps workflow.
-
-The project emphasizes real-world engineering practices including Docker containerization, automated CI/CD pipelines, cloud deployment, monitoring, centralized logging, caching, security hardening, and production-ready infrastructure.
-
----
-
-# Demo
+## Overview Demo
 
 ![Main Feed Demo](https://github.com/Wasi-Genius/Twitter-Clone/blob/main/Read%20Me%20Assets/Overview%20Demo%20Gif.gif)
 
 ---
 
-# Features
+## Features
 
-## Authentication & Authorization
-
-- Secure JWT authentication
-- User registration and login
-- Password hashing with Bcrypt
-- Protected API routes
-- Session management
+- **Authentication & Authorization**
+  - Secure JWT-based login/sign up
+  - Protected routes and session management
+  - Hashed passwords and password comparison using Bcrypt
 
 https://github.com/user-attachments/assets/e4fc274e-8ca0-4e19-a243-566fa8341f99
 
-<br>
+</br>
 
-## User Profiles
-
-- Edit profile information
-- Upload profile and banner images
-- View personal posts
-- View liked and bookmarked posts
+- **User Profiles**
+  - View, edit, and update profile details
+  - Upload avatar and banner images
+  - View user, liked, and bookmarked posts
 
 https://github.com/user-attachments/assets/d5eea438-984d-49de-b9c5-e32d22d1b032
 
-<br>
+</br>
 
-## Posts
-
-- Create and delete posts
-- Like posts
-- Comment on posts
-- Repost content
-- Bookmark posts
-- Upload images
-- Remove likes, bookmarks, and comments
+- **Posts**
+  - Create and delete posts
+  - Like, comment, repost, and bookmark posts 
+    - Delete comments and undo bookmarks and likes
+  - Upload viewable images
 
 https://github.com/user-attachments/assets/f16bbb3b-2cb6-4192-ae29-f3b0b9d332f3
 
-<br>
+</br>
 
-## Social Features
-
-- Follow and unfollow users
-- Followers and following lists
-- Personalized feed
-- Suggested users
+- **Follow System**
+  - Follow/unfollow users
+  - View followers and following
+  - Personalized feed based on followed users
+  - Who to follow panel 
 
 https://github.com/user-attachments/assets/31719900-211d-4d77-a59e-30c647f455b6
 
-<br>
+</br>
 
-## Notifications
-
-- Follow notifications
-- Like notifications
-- Comment notifications
-- Bookmark notifications
-- Delete individual notifications
-- Clear all notifications
+- **Notifications**
+  - Real-time notifications for follows, likes, comments, and bookmarks
+  - Delete one notification at a time or all notifications at once
 
 https://github.com/user-attachments/assets/f6e8d0e9-54b4-4404-be8b-282392518321
 
-<br>
+</br>
 
-## Responsive User Interface
-
-- Mobile-first responsive design
-- Desktop support
-- Skeleton loading states
-- Real-time UI updates
-- Dynamic data fetching
+- **Responsive UI**
+  - Mobile and desktop compatible design
+  - Skeleton loaders for improved UX
+  - Real time data fetching and UI changes
 
 https://github.com/user-attachments/assets/3a4b3a7a-e786-4c01-a518-94bafcea76de
 
-<br>
+</br>
 
-## Developer Features
-
-- Modular REST API
-- Reusable React components
-- Custom hooks
-- Environment-based configuration
-- Clean project architecture
+- **Utilities**
+  - Date formatting
+  - Custom hooks for state management
+  - Seamless database integration and mutation
 
 ---
 
-# Architecture
+## Architecture
 
-```
-                        User
-                          │
-                          ▼
-                React + Vite Frontend
-                     (Render Hosting)
-                          │
-                          ▼
-                 Express REST API
-                  (Render Hosting)
-                          │
-          ┌───────────────┴────────────────┐
-          ▼                                ▼
-   MongoDB Atlas                    Upstash Redis
-          │
-          ▼
-     Cloudinary Storage
-```
+The project is organized into a backend and front end:
+
+- **Backend (Node.js, Express, MongoDB)**
+
+  - RESTful API design
+  - Modular controllers, models, and routes
+  - Middleware for authentication and error handling
+  - MongoDB for scalable data storage
+
+- **Frontend (React, Vite)**
+  - Component-based architecture
+  - Custom hooks for business logic
+  - Context API for global state
+  - Optimized for performance and accessibility
 
 ---
 
-# DevOps & Infrastructure
+## Tech Stack
 
-## Containerization
-
-- Dockerized frontend
-- Dockerized backend
-- Dockerized local MongoDB
-- Multi-container development using Docker Compose
-- Production-ready Docker configuration
-- Health checks
-- Multi-stage Docker builds
+| Layer     | Technology               | Purpose                        |
+| --------- | ------------------------ | ------------------------------ |
+| Frontend  | React, Vite, CSS Modules | UI, SPA, Fast Dev Experience   |
+| Backend   | Node.js, Express         | API, Business Logic            |
+| Database  | MongoDB, Mongoose        | Data Storage & Modeling        |
+| Auth      | JWT, Custom Middleware, Bcrypt   | Secure Authentication          |
+| Utilities | ESLint, Custom Hooks     | Code Quality, State Management |
 
 ---
 
-## Cloud Deployment
-
-- Frontend deployed on Render
-- Backend deployed on Render
-- MongoDB Atlas cloud database
-- HTTPS enabled
-- Environment-based configuration
-- Production CORS configuration
-
----
-
-## CI/CD
-
-- GitHub Actions pipeline
-- Automatic dependency installation
-- Automated linting
-- Automated build verification
-- Automated testing
-- Docker image validation
-- Automatic deployment through Render
-
----
-
-## Monitoring & Observability
-
-- Health check endpoint
-- Request logging
-- Centralized error handling
-- API response time logging
-- Uptime monitoring
-- Error tracking
-- Monitoring dashboards
-
----
-
-## Production Improvements
-
-- Rate limiting
-- Security headers with Helmet
-- Redis caching
-- Cloudinary image storage
-- Background job processing
-- Centralized application configuration
-
----
-
-# Tech Stack
-
-| Layer | Technologies |
-|--------|--------------|
-| Frontend | React, Vite, JavaScript, HTML, CSS |
-| Backend | Node.js, Express.js |
-| Database | MongoDB Atlas, Mongoose |
-| Authentication | JWT, Bcrypt |
-| Containerization | Docker, Docker Compose |
-| Cloud | Render |
-| CI/CD | GitHub Actions |
-| Monitoring | UptimeRobot, Grafana Cloud, Sentry |
-| Performance | Upstash Redis |
-| Media Storage | Cloudinary |
-| Security | Helmet, Express Rate Limit |
-| Development Tools | Git, GitHub, ESLint |
-
----
-
-# Project Structure
+## Project Structure
 
 ```
 Evermore/
-│
 ├── backend/
-│   ├── config/
-│   ├── controllers/
-│   ├── db/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── utils/
-│   └── server.js
-│
+│   ├── controllers/        # API logic
+│   ├── db/                 # DB connection
+│   ├── lib/                # Utility functions
+│   ├── middleware/         # Auth & error handling
+│   ├── models/             # Mongoose schemas
+│   └── routes/             # API endpoints
 ├── frontend/
-│   ├── public/
+│   ├── public/             # Static assets
 │   └── src/
-│       ├── components/
-│       ├── hooks/
-│       ├── pages/
-│       ├── context/
-│       ├── utils/
-│       └── assets/
-│
-├── .github/
-│   └── workflows/
-│
-├── docker-compose.yml
-├── README.md
+│       ├── components/     # Reusable UI
+│       ├── hooks/          # Custom hooks
+│       ├── pages/          # Route-based pages
+│       └── utils/          # Helper functions
 └── package.json
 ```
 
 ---
 
-# Setup & Installation
+## Setup & Installation
 
-## Prerequisites
+### Prerequisites
 
-- Node.js (v18+)
-- Docker Desktop
-- Git
-- MongoDB Atlas account
-- Cloudinary account
-- Upstash Redis account
-
----
-
-## Clone Repository
-
-```bash
-git clone https://github.com/Wasi-Genius/Evermore.git
-
-cd Evermore
-```
-
----
-
-## Run with Docker
-
-```bash
-docker compose up --build
-```
-
----
-
-## Local Development
+- Node.js (v18+ recommended)
+- npm
+- MongoDB (local or Atlas)
 
 ### Backend
 
 ```bash
 cd backend
 npm install
+# Create a .env file with MONGODB_URI and JWT_SECRET
 npm start
 ```
 
@@ -309,122 +166,38 @@ npm install
 npm run dev
 ```
 
----
+### Environment Variables
 
-## Environment Variables
+Create a `.env` file in `backend/`:
 
-### Backend
-
-```env
-MONGODB_URI=
-
-JWT_SECRET=
-
-CLIENT_URL=
-
-CLOUDINARY_CLOUD_NAME=
-
-CLOUDINARY_API_KEY=
-
-CLOUDINARY_API_SECRET=
-
-REDIS_URL=
-
-NODE_ENV=production
+```
+MONGODB_URI=your-mongodb-uri
+JWT_SECRET=your-jwt-secret
+CLOUDINARY_CLOUD_NAME=your-cloudinary-name
+CLOUDINARY_API_KEY=your-cloudinary-api-key
+ClOUDINARY_API_SECRET=your-cloudinary-api-secret
 ```
 
 ---
 
-### Frontend
+## API Documentation
 
-```env
-VITE_API_URL=
-```
+The backend exposes RESTful endpoints for authentication, posts, users, and notifications. Sample endpoints:
 
----
+- `POST /api/auth/signup` - Register a new user
+- `POST /api/auth/login` - Login and receive JWT
+- `GET /api/posts` - Fetch posts for feed
+- `POST /api/posts` - Create a new post
+- `GET /api/users/:id` - Get user profile
+- `POST /api/users/:id/follow` - Follow a user
+- `GET /api/notifications` - Get notifications
 
-# CI/CD Pipeline
-
-The project uses GitHub Actions to automate quality checks before deployment.
-
-```
-Developer
-     │
-     ▼
-Git Push
-     │
-     ▼
-GitHub Actions
-     │
- ├── Install Dependencies
- ├── Lint
- ├── Run Tests
- ├── Build Application
- └── Validate Docker Images
-     │
-     ▼
-Render Automatic Deployment
-```
-
-This ensures every deployment is validated before reaching production.
 
 ---
 
-# Monitoring & Observability
+## Contact
 
-Evermore includes several production monitoring features:
-
-- Health endpoint (`/health`)
-- Request logging
-- Response time monitoring
-- Centralized error handling
-- Uptime monitoring
-- Error tracking
-- Performance dashboards
-
-These tools help identify failures, monitor application health, and improve production reliability.
+Created by [Wasi Genius](https://github.com/Wasi-Genius)  
+Feel free to reach out via [LinkedIn](https://www.linkedin.com/in/wasi-genius) or email for collaboration or questions.
 
 ---
-
-# API Documentation
-
-### Authentication
-
-- `POST /api/auth/signup`
-- `POST /api/auth/login`
-
-### Users
-
-- `GET /api/users/:id`
-- `PUT /api/users/:id`
-- `POST /api/users/:id/follow`
-
-### Posts
-
-- `GET /api/posts`
-- `POST /api/posts`
-- `DELETE /api/posts/:id`
-- `POST /api/posts/:id/like`
-- `POST /api/posts/:id/comment`
-- `POST /api/posts/:id/bookmark`
-
-### Notifications
-
-- `GET /api/notifications`
-- `DELETE /api/notifications/:id`
-
-### Health
-
-- `GET /health`
-
----
-
-# Contact
-
-**Wasi Genius**
-
-- GitHub: https://github.com/Wasi-Genius
-- LinkedIn: https://www.linkedin.com/in/wasi-genius
-
-Feel free to connect if you'd like to discuss software engineering, DevOps, cloud technologies, or collaborate on future projects.
-````
